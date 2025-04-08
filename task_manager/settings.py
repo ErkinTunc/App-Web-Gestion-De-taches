@@ -52,7 +52,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
-ROOT_URLCONF = 'tasks.urls'
 
 TEMPLATES = [
     {
