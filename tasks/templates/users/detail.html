@@ -1,0 +1,36 @@
+{% extends 'tasks/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% block body %}
+        <h1>{{ task.title }}</h1>
+        <h2>{{ task.status }}</h2>
+        <h3>{{ task.description }}</h3>
+        <h3>{{ task.users }}</h3>
+        <h3>{{ task.teams }}</h3>
+        <h3>{{ task.subtasks }}</h3>
+        <h4>{{ task.created_at}}</h4>
+        <h4>{{ task.updated_at}}</h4>
+        <h4>{{ task.deadline}}</h4>
+    {% endblock %}
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,8 +16,8 @@
         <h2> Tasks</h2>
         {% for task in task_list %}
         <ul>
-            <li>
-                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+            <li> <!-- pipe defauult if none :   -->
+                <a href="{% url 'task:detail_task' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a> 
 
             </li>
         </ul>
@@ -30,10 +30,10 @@
     <!-- Teams Section -->
     <section>
         <h2> Teams</h2>
-        {% for task in task_list %}
+        {% for team in team_list %}
         <ul>
             <li>
-                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+                <a href="{% url 'task:detail_team' team.id %}"> {{ team.id }} -- {{team.name}} </a>
 
             </li>
         </ul>
@@ -45,10 +45,10 @@
     <!-- User Section -->
     <section>
         <h2> Users</h2>
-        {% for task in task_list %}
+        {% for user in user_list %}
         <ul>
             <li>
-                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+                <a href="{% url 'task:detail_user' user.id %}"> {{ user.id }} -- {{user.username}} -- {{user.status}}</a>
 
             </li>
         </ul>
