@@ -1,0 +1,63 @@
+{% extends 'tasks/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+
+<body>
+    {% block body %}
+    <!-- Task Section -->
+    <section>
+        <h2> Tasks</h2>
+        {% for task in task_list %}
+        <ul>
+            <li>
+                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+
+            </li>
+        </ul>
+        {% endfor %}
+
+    </section>
+
+
+
+    <!-- Teams Section -->
+    <section>
+        <h2> Teams</h2>
+        {% for task in task_list %}
+        <ul>
+            <li>
+                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+
+            </li>
+        </ul>
+        {% endfor %}
+    </section>
+
+
+
+    <!-- User Section -->
+    <section>
+        <h2> Users</h2>
+        {% for task in task_list %}
+        <ul>
+            <li>
+                <a href="{% url 'task:detail' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
+
+            </li>
+        </ul>
+        {% endfor %}
+    </section>
+
+
+
+    {% endblock %}
+</body>
+
+</html>
