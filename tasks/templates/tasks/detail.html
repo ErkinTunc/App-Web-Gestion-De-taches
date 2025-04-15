@@ -1,4 +1,4 @@
-{% extends 'tasks/base.html' %}
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,16 +9,48 @@
 <body>
     
     {% block body %}
-        <h1>{{ task.title }}</h1>
-        <h2>{{ task.status }}</h2>
-        <h3>{{ task.description }}</h3>
-        <h3>{{ task.users }}</h3>
-        <h3>{{ task.teams }}</h3>
-        <h3>{{ task.subtasks }}</h3>
-        <h4>{{ task.created_at}}</h4>
-        <h4>{{ task.updated_at}}</h4>
-        <h4>{{ task.deadline}}</h4>
-    {% endblock %}
+    <h1>{{ task.title }}</h1>
+    <h2>Status: {{ task.status }}</h2>
+
+    {% if task.description %}
+        <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
+
+    <h3>Assigned Users:</h3>
+    <ul>
+        {% for user in task.users.all %} <!-- for loop for teams-->
+            <li>{{ user.username }}</li>
+        {% empty %} <!-- if there are no teams condition is true -->
+            <li>No users assigned.</li>
+        {% endfor %} <!-- end of for loop-->
+    </ul>
+
+    <h3>Related Teams:</h3>
+    <ul>
+        {% for team in task.teams.all %} 
+            <li>{{ team.name }}</li>
+        {% empty %} 
+            <li>No teams assigned.</li>
+        {% endfor %} 
+    </ul>
+
+    <h3>Subtasks:</h3>
+    <ul>
+        {% for subtask in task.subtasks.all %}
+            <li>{{ subtask.title }}</li>
+        {% empty %}
+            <li>No subtasks.</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Created at:</strong> {{ task.created_at }}</p>
+    <p><strong>Last updated:</strong> {{ task.updated_at }}</p>
+
+    {% if task.deadline %}
+        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+    {% endif %}
+{% endblock %}
+
     
 </body>
 </html>

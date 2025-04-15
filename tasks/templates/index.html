@@ -1,4 +1,4 @@
-{% extends 'tasks/base.html' %}
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +17,7 @@
         {% for task in task_list %}
         <ul>
             <li> <!-- pipe defauult if none :   -->
-                <a href="{% url 'task:detail_task' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a> 
+                <a href="{% url 'task:detail_task' task.id %}"> {{ task.id }} -- {{task.title}} -- {{task.status}}</a>
 
             </li>
         </ul>
@@ -48,12 +48,14 @@
         {% for user in user_list %}
         <ul>
             <li>
-                <a href="{% url 'task:detail_user' user.id %}"> {{ user.id }} -- {{user.username}} -- {{user.status}}</a>
-
+                <a href="{% url 'task:detail_user' user.id %}">
+                    {{ user.id }} -- {{ user.user.username }} 
+                </a>
             </li>
         </ul>
         {% endfor %}
     </section>
+    
 
 
 

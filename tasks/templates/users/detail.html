@@ -1,36 +1,44 @@
-{% extends 'tasks/base.html' %}
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+
     {% block body %}
-        <h1>{{ task.title }}</h1>
-        <h2>{{ task.status }}</h2>
-        <h3>{{ task.description }}</h3>
-        <h3>{{ task.users }}</h3>
-        <h3>{{ task.teams }}</h3>
-        <h3>{{ task.subtasks }}</h3>
-        <h4>{{ task.created_at}}</h4>
-        <h4>{{ task.updated_at}}</h4>
-        <h4>{{ task.deadline}}</h4>
+    <!-- user is UserProfile object-->
+    <!-- user.user is User object-->
+    <h1>User: {{ user.user.username }}</h1>
+
+    {% if user.description %}
+    <p><strong>Description:</strong> {{ user.description }}</p>
+    {% endif %}
+
+    <h3>Teams:</h3>
+    <ul>
+        {% for team in user.user.teams.all %}
+        <li>{{ team.name }}</li>
+        {% empty %}
+        <li>This user is not part of any team.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Assigned Tasks:</h3>
+    <ul>
+        {% for task in user.user.tasks.all %}
+        <li>{{ task.title }} - {{ task.status }}</li>
+        {% empty %}
+        <li>No tasks assigned to this user.</li>
+        {% endfor %}
+    </ul>
     {% endblock %}
-    
+
+
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

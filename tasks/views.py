@@ -17,7 +17,7 @@ def index(request):
         "team_list":team_list,
         "user_list":user_list,
     }
-    return render(request,"tasks/index.html",context)
+    return render(request,"index.html",context)
 
 
 # leads us to details.html pages
