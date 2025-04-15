@@ -25,7 +25,7 @@ class Task(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
     description = models.TextField(blank=True)
     users = models.ManyToManyField(User, related_name='tasks')  # Users assigned to the task
-    teams = models.ManyToManyField(Team, related_name='tasks')  # Teams related to the task
+    teams = models.ManyToManyField(Team, related_name='tasks' ,null=True, blank=True)  # Teams related to the task
     subtasks = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='parent_tasks')  # Optional sub-task linkage
 
     created_at = models.DateTimeField(auto_now_add=True)
