@@ -40,8 +40,8 @@ class UserProfile(models.Model):
     #one-to-one relation ship 
     user = models.OneToOneField(User, on_delete=models.CASCADE)# if we delete user we delete theri profile too
     description = models.TextField(blank=True)
+    image = models.CharField(max_length=500,default="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
 
-    # profile_picture = models.ImageField(upload_to='profiles/', null=True, blank=True) ###  TODO : Definitly modify this there are mo connection with anything.
     def __str__(self):
         return self.user.username
 
