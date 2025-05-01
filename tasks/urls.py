@@ -17,7 +17,23 @@ urlpatterns = [
     path("teams/<int:team_id>/", views.detail_team, name="detail_team"),
     # /user/1
     path("users/<int:user_id>/", views.detail_user, name="detail_user"),
-    
+
+
+    # add (create)
+    path("users/add", views.create_user, name="create_user"),
+    path("teams/add", views.create_team, name="create_team"),
+    path("tasks/add", views.create_task, name="create_task"),
+
+    # update
+    path("users/update/<int:id>/", views.update_user, name="update_user"),
+    path("teams/update/<int:id>/", views.update_team, name="update_team"),
+    path("tasks/update/<int:id>/", views.update_task, name="update_task"),
+
+    # delete
+    path("users/delete/<int:id>/", views.delete_user, name="delete_user"),
+    path("teams/delete/<int:id>/", views.delete_team, name="delete_team"),
+    path("tasks/delete/<int:id>/", views.delete_task, name="delete_task"),
+
 
     # Hellow World URL
     path("item/",views.item,name="item"),

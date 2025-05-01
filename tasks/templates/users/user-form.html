@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <form method="POST">
+        {% csrf_token %} <!-- this tag is used for security -->
+        {{form}}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
