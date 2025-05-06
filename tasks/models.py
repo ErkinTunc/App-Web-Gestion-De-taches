@@ -6,6 +6,7 @@ from django.dispatch import receiver           # automatic triggers
 
 # Create your models here.
 
+# we do not need to modify the teams 
 class Team(models.Model): # One user can be a team
     name = models.CharField(max_length=100)
     users = models.ManyToManyField(User, related_name='teams')

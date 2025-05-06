@@ -6,7 +6,7 @@ app_name = "task"
 
 urlpatterns = [
     # /tasks/
-    path("",views.index,name="index"), 
+    path("", views.index, name="index"), # we remoed it because we wont create other applications 
     # In here if we want to show URL like this"/index"  
     # we write like this
     # if not leave a blank "".
