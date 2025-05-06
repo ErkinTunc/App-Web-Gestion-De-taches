@@ -51,7 +51,7 @@ def create_user(request):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, "users/user-form.html", {"form": form})
 
@@ -61,7 +61,7 @@ def create_team(request):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, "teams/team-form.html", {"form": form})
 
@@ -71,7 +71,7 @@ def create_task(request):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, "tasks/task-form.html", {"form": form})
 
@@ -82,7 +82,7 @@ def update_user(request, id):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, 'users/user-form.html', {'form': form, 'user': user})
 
@@ -93,7 +93,7 @@ def update_team(request, id):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, 'teams/team-form.html', {'form': form, 'team': team})
 
@@ -104,7 +104,7 @@ def update_task(request, id):
 
     if form.is_valid():
         form.save()
-        return redirect("task:index")
+        return redirect("index")
 
     return render(request, 'tasks/task-form.html', {'form': form, 'task': task})
 
@@ -115,7 +115,7 @@ def delete_user(request, id):
 
     if request.method == 'POST':
         user.delete()
-        return redirect('task:index')
+        return redirect('index')
 
     return render(request, 'users/user-delete.html', {'user': user})
 
@@ -125,7 +125,7 @@ def delete_team(request, id):
 
     if request.method == 'POST':
         team.delete()
-        return redirect('task:index')
+        return redirect('index')
 
     return render(request, 'teams/team-delete.html', {'team': team})
 
@@ -135,9 +135,17 @@ def delete_task(request, id):
 
     if request.method == 'POST':
         task.delete()
-        return redirect('task:index')
+        return redirect('index')
 
     return render(request, 'tasks/task-delete.html', {'task': task})
+
+# ================= DASHBOARD =======================
+def dashboard(request):
+    if request.user.is_superuser:
+        return render(request, "admin_dashboard.html")
+    else:
+        return render(request, "user_dashboard.html")
+
 
 
 # ================= HELLO WORLD ==========================
