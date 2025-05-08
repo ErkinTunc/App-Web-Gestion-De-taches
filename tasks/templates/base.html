@@ -10,13 +10,13 @@
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'tasks/styles.css' %}">
     <!-- Site Information -->
-    <title>Document</title>
+    <title>TaskManager</title>
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-dark bg-dark">
-            <a href="/" class="navbar-brand ms-3">FoodApp</a>
+            <a href="/" class="navbar-brand ms-3">TaskManager</a>
             
             <div class="navbar-nav flex-row ms-auto me-3">
                 <a class="nav-link px-3" href="{% url 'task:create_task' %}">Add Task</a>
@@ -37,7 +37,7 @@
             </div>
         </nav>
 
-        {% if messages %} <!-- Login Success msg -->
+        {% if messages %} <!-- Register Success msg -->
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
                 {{ message }}

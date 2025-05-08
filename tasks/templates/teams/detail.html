@@ -1,38 +1,48 @@
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     {% block body %}
-    <h1>Team: {{ team.name }}</h1>
+    <main class="container my-5">
+      <div class="card shadow-sm p-4">
+        <!-- Team Name -->
+        <h1 class="mb-4">Team: {{ team.name }}</h1>
 
-    <h3>Members:</h3>
-    <ul>
-        {% for user in team.users.all %}
-        <li>{{ user.username }}</li>
-        {% empty %}
-        <li>No users in this team.</li>
-        {% endfor %}
-    </ul>
+        <!-- Members as inline elements | could be changed later if ı want to give more info on the users -->
+        <h3>Members:</h3>
+        {% if team.users.all %}
+        <div class="mb-4">
+          {% for user in team.users.all %}
+            <a href="{% url 'task:detail_user' user.id %}" class="btn btn-outline-primary me-2 mb-2">
+                {{ user.username }} (ID: {{ user.id }})
+            </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted">No users in this team.</p>
+        {% endif %}
 
-    <h3>Tasks Assigned to This Team:</h3>
-    <ul>
-        {% for task in team.tasks.all %}
-        <li>{{ task.title }} - {{ task.status }}</li>
-        {% empty %}
-        <li>No tasks assigned to this team.</li>
-        {% endfor %}
-    </ul>
+        <!-- Tasks -->
+        <h3>Tasks Assigned to This Team:</h3>
+        <ul class="list-group">
+          {% for task in team.tasks.all %}
+            <a href="{% url 'task:detail_task' task.id %}" class="btn btn-outline-primary me-2 mb-2">
+                {{ task.title }} (Status {{task.status}} | ID: {{ task.id }})
+            </a>
+          {% empty %}
+          <li class="list-group-item text-muted">
+            No tasks assigned to this team.
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
     {% endblock %}
-
-
-</body>
-
+  </body>
 </html>

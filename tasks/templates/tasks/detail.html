@@ -1,68 +1,69 @@
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     {% block body %}
-    <h1>{{ task.title }}</h1>
-    <h2>Status: {{ task.status }}</h2>
+    <main class="container my-5">
+      <div class="card shadow-sm p-4">
+        <!-- Title and Status -->
+        <h1>{{ task.title }}</h1>
+        <h2>Status: {{ task.status }}</h2>
 
-    {% if task.description %}
+        {% if task.description %}
         <p><strong>Description:</strong> {{ task.description }}</p>
-    {% endif %}
+        {% endif %}
 
-    <h3>Assigned Users:</h3>
-    <ul>
-        {% for user in task.users.all %} <!-- for loop for teams-->
-            <li>{{ user.username }}</li>
-        {% empty %} <!-- if there are no teams condition is true -->
-            <li>No users assigned.</li>
-        {% endfor %} <!-- end of for loop-->
-    </ul>
+        <!-- Assigned users list -->
+        <h3>Assigned Users:</h3>
+        <ul class="list-group mb-3">
+          {% for user in task.users.all %}
+          <!-- for loop for teams-->
+            <a href="{% url 'task:detail_user' user.id %}" class="btn btn-outline-primary me-2 mb-2">
+                {{ user.username }} (ID: {{ user.id }})
+            </a>
+          {% empty %}
+          <!-- if there are no teams condition is true -->
+            <li class="list-group-item text-muted">No users assigned.</li>
+          {% endfor %}
+          <!-- end of for loop-->
+        </ul>
 
-    <h3>Related Teams:</h3>
-    <ul>
-        {% for team in task.teams.all %} 
-            <li>{{ team.name }}</li>
-        {% empty %} 
-            <li>No teams assigned.</li>
-        {% endfor %} 
-    </ul>
+        <!-- Related teams list -->
+        <h3>Related Teams:</h3>
+        <ul class="list-group mb-3">
+          {% for team in task.teams.all %}
+          <li class="list-group-item">{{ team.name }}</li>
+          {% empty %}
+          <li class="list-group-item text-muted">No teams assigned.</li>
+          {% endfor %}
+        </ul>
 
-    <h3>Subtasks:</h3>
-    <ul>
-        {% for subtask in task.subtasks.all %}
-            <li>{{ subtask.title }}</li>
-        {% empty %}
-            <li>No subtasks.</li>
-        {% endfor %}
-    </ul>
+        <!-- Subtask list -->
+        <h3>Subtasks:</h3>
+        <ul class="list-group mb-3">
+          {% for subtask in task.subtasks.all %}
+            <li class="list-group-item">{{ subtask.title }}</li>
+          {% empty %}
+            <li class="list-group-item text-muted">No subtasks.</li>
+          {% endfor %}
+        </ul>
 
-    <p><strong>Created at:</strong> {{ task.created_at }}</p>
-    <p><strong>Last updated:</strong> {{ task.updated_at }}</p>
+        <!-- Meta data -->
+        <div class="text-muted mt-3">
+          <p><strong>Created at:</strong> {{ task.created_at }}</p>
+          <p><strong>Last updated:</strong> {{ task.updated_at }}</p>
 
-    {% if task.deadline %}
-        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-    {% endif %}
-{% endblock %}
-
-    
-</body>
+          {% if task.deadline %}
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+    {% endblock %}
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
