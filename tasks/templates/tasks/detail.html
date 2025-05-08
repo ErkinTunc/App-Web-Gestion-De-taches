@@ -48,6 +48,9 @@
         <ul class="list-group mb-3">
           {% for subtask in task.subtasks.all %}
             <li class="list-group-item">{{ subtask.title }}</li>
+            <a href="{% url 'task:detail_task' task.id %}" class="btn btn-outline-primary me-2 mb-2">
+                {{ task.title }} (Status {{task.status}} | ID: {{ task.id }})
+            </a>
           {% empty %}
             <li class="list-group-item text-muted">No subtasks.</li>
           {% endfor %}

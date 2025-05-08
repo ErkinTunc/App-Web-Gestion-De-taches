@@ -76,7 +76,7 @@ def create_task(request):
     return render(request, "tasks/task-form.html", {"form": form})
 
 # ================== UPDATE =====================
-def update_user(request, id):
+def update_user(request, id): #TODO: Shoudl make it right it is creating new users
     user = UserProfile.objects.get(id=id)
     form = CustomUserForm(request.POST or None, instance=user.user)
 

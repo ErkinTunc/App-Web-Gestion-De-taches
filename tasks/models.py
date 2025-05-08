@@ -1,7 +1,7 @@
 from django.db import models 
 from django.contrib.auth.models import User  # Using Django's built-in User model
 
-from django.db.models.signals import post_save # automatic triggers
+from django.db.models.signals import post_save,post_delete # automatic triggers
 from django.dispatch import receiver           # automatic triggers
 
 # Create your models here.
@@ -51,3 +51,14 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+        
+# when user is deleted it Automatically cuts of all the relations user had.
+@receiver(post_delete, sender=User) 
+def remove_user_from_related(sender, instance, **kwargs):
+    instance.tasks.clear()
+    instance.teams.clear()
+    
+# when team is deleted program automatically cuts of all the relations user had.
+@receiver(post_delete, sender=Team)
+def remove_team_from_tasks(sender, instance, **kwargs):
+    instance.tasks.clear()
