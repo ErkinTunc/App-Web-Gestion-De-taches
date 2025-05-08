@@ -24,6 +24,16 @@
                 <a class="nav-link px-3" href="#">View Item</a>
             </div>
         </nav>
+
+        {% if messages %} <!-- Login Success msg -->
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+                
+            {% endfor %}
+        {% endif %}
+
     </header>
 
     {% block body %}
