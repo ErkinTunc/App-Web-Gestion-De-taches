@@ -1,57 +1,45 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block body %}
+<main class="container my-5">
+    <div class="card shadow-lg">
+        <div class="row g-0">
+            <!-- User image on the left -->
+            <div class="col-md-5">
+                <img src="{{ user.image.url }}" alt="User Image" class="img-fluid h-100" style="object-fit: cover;">
+            </div>
 
-<body>
+            <!-- User info on the right -->
+            <div class="col-md-7 p-4">
+                <h2>{{ user.user.username }}</h2> <!-- --> 
 
-    {% block body %}
-    <!-- user is UserProfile object-->
-    <!-- user.user is User object-->
-    <div class="row">   
-    
-        <div class="col-md-6">
-            <img src="{{ user.image }}" class="card img-fluid" height="25rem" alt="">
+                {% if user.description %}
+                <p><strong>Description:</strong> {{ user.description }}</p>
+                {% endif %}
+
+                <hr>
+
+                <h5>Teams</h5>
+                <ul class="list-group mb-3">
+                    {% for team in user.user.teams.all %}
+                    <li class="list-group-item">{{ team.name }}</li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">No teams yet.</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>Assigned Tasks</h5>
+                <ul class="list-group">
+                    {% for task in user.user.tasks.all %}
+                    <li class="list-group-item">
+                        <strong>{{ task.title }}</strong> – {{ task.status }}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">No tasks assigned.</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-
-        <div class="col-md-6">
-            <h1>User: {{ user.user.username }}</h1>
-            {% if user.description %}
-            <p><strong>Description:</strong> {{ user.description }}</p>
-            {% endif %}
-        </div>
-        
-        <div class="col-md-6">
-           <h3>Teams:</h3>
-        <ul>
-            {% for team in user.user.teams.all %}
-            <li>{{ team.name }}</li>
-            {% empty %}
-            <li>This user is not part of any team.</li>
-            {% endfor %}
-        </ul> 
-        </div>
-
-        <div class="col-md-6">
-            <h3>Assigned Tasks:</h3>
-            <ul>
-                {% for task in user.user.tasks.all %}
-                <li>{{ task.title }} - {{ task.status }}</li>
-                {% empty %}
-                <li>No tasks assigned to this user.</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        
-
     </div>
-    {% endblock %}
-</body>
-
-</html>
+</main>
+{% endblock %}
