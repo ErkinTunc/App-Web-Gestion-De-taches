@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,3 +128,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "task:index"
+LOGOUT_REDIRECT_URL = 'login'
+
+LOGIN_URL = "login" # it automaticly push you to login when you try to go to an URL which can be enterd only by Logged users
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"pictures") # all the images will be saved in this folder
+MEDIA_URL = "/pictures/"
