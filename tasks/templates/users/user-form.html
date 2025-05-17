@@ -8,9 +8,13 @@
     <h4>Account Info</h4>
     {{ form.as_p}} <!-- changed from "user_form.as_p" -> form.as_p , note to myself: check the tags and dont spend unncesessaary time -->
 
-    <hr>
-    <h4>Profile Info</h4>
-    {{ profile_form.as_p }}
+    
+    {% if profile_form %} <!-- if it is not null(none) -->
+      <hr>
+      <h4>Profile Info</h4>
+      {{ profile_form.as_p }}
+    {% endif %}
+    
 
     <button type="submit" class="btn btn-primary mt-3">Save</button>
   </form>

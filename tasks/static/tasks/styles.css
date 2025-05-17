@@ -1,8 +1,14 @@
-body{
-    background-color: lightyellow;
-    
+body {
+  background-color: lightyellow;
 }
 
-li{
-    margin: auto;
+li {
+  margin: auto;
+}
+
+.rowList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
 }

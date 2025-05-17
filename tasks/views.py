@@ -139,7 +139,10 @@ def update_task(request, id):
 # ================= DELETE =======================
 @login_required
 def delete_user(request, id):
-    user = UserProfile.objects.get(id=id)
+    userProfile = UserProfile.objects.get(id=id)
+    user = userProfile.user # userProfile and user is connected but we should delete
+    # user because it is the main one and we make relations with teams and tasks with 
+    # user class not with the other
 
     if request.method == 'POST':
         user.delete()
