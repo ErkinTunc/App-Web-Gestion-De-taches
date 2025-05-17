@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login # might be deleted in the future
+from django.contrib import messages # might be deleted in the future
 from django.http import HttpResponse
 from .models import Team , Task , UserProfile # importing from models.py Item sql table
 from django.template import loader
-from .forms import CustomUserForm, TeamForm,TaskForm
+from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfileUpdateForm 
 
 # Create your views here.
 from django.http import HttpResponse
@@ -84,17 +86,33 @@ def create_task(request):
     return render(request, "tasks/task-form.html", {"form": form})
 
 # ================== UPDATE =====================
+
 @login_required
-def update_user(request, id): #TODO: Shoudl make it right it is creating new users
-    user = UserProfile.objects.get(id=id)
-    form = CustomUserForm(request.POST or None, instance=user.user)
+def update_user(request, id):  # TODO: Should make it right it is creating new users
+    user_profile = get_object_or_404(UserProfile, id=id)
+    user = user_profile.user
 
-    if form.is_valid():
-        form.save()
-        return redirect("task:index")
+    if request.user.is_authenticated:
+        user_form = UserUpdateForm(request.POST or None, instance=user)  # instance=user will put all the info of the user into our form
+        profile_form = UserProfileUpdateForm(request.POST or None, request.FILES or None, instance=user_profile)  # extra user info && dont fotget to add 2 formats into the html page
 
-    return render(request, 'users/user-form.html', {'form': form, 'user': user})
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save() # saving the modified data
 
+            login(request, user)  # re-login updated user
+            messages.success(request, "User has been updated!!!") # Test-if it does not work delete me ":(" --> it works ":)"
+            return redirect("task:index")  # go back to index after update
+
+        return render(request, 'users/user-form.html', {
+            'form': user_form,
+            'profile_form': profile_form,
+            'user': user
+        })
+
+    else:
+        return redirect("login")  # if not authenticated && we are already guarding it with "@login_required" but it also helps
+    
 @login_required
 def update_team(request, id):
     team = Team.objects.get(id=id)

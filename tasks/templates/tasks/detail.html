@@ -1,72 +1,63 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    {% block body %}
-    <main class="container my-5">
-      <div class="card shadow-sm p-4">
-        <!-- Title and Status -->
-        <h1>{{ task.title }}</h1>
-        <h2>Status: {{ task.status }}</h2>
 
-        {% if task.description %}
-        <p><strong>Description:</strong> {{ task.description }}</p>
-        {% endif %}
+{% block body %}
+<main class="container my-5">
+  <div class="card shadow-sm p-4">
+    <!-- Title and Status -->
+    <h1>{{ task.title }}</h1>
+    <h2>Status: {{ task.status }}</h2>
 
-        <!-- Assigned users list -->
-        <h3>Assigned Users:</h3>
-        <ul class="list-group mb-3">
-          {% for user in task.users.all %}
-          <!-- for loop for teams-->
-            <a href="{% url 'task:detail_user' user.id %}" class="btn btn-outline-primary me-2 mb-2">
-                {{ user.username }} (ID: {{ user.id }})
-            </a>
-          {% empty %}
-          <!-- if there are no teams condition is true -->
-            <li class="list-group-item text-muted">No users assigned.</li>
-          {% endfor %}
-          <!-- end of for loop-->
-        </ul>
+    {% if task.description %}
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
 
-        <!-- Related teams list -->
-        <h3>Related Teams:</h3>
-        <ul class="list-group mb-3">
-          {% for team in task.teams.all %}
-          <li class="list-group-item">{{ team.name }}</li>
-          {% empty %}
-          <li class="list-group-item text-muted">No teams assigned.</li>
-          {% endfor %}
-        </ul>
+    <!-- Assigned users list -->
+    <h3>Assigned Users:</h3>
+    <ul class="list-group mb-3">
+      {% for user in task.users.all %}
+        <a href="{% url 'task:detail_user' user.id %}" class="btn btn-outline-primary me-2 mb-2">
+            {{ user.username }} (ID: {{ user.id }})
+        </a>
+      {% empty %}
+        <li class="list-group-item text-muted">No users assigned.</li>
+      {% endfor %}
+    </ul>
 
-        <!-- Subtask list -->
-        <h3>Subtasks:</h3>
-        <ul class="list-group mb-3">
-          {% for subtask in task.subtasks.all %}
-            <li class="list-group-item">{{ subtask.title }}</li>
-            <a href="{% url 'task:detail_task' task.id %}" class="btn btn-outline-primary me-2 mb-2">
-                {{ task.title }} (Status {{task.status}} | ID: {{ task.id }})
-            </a>
-          {% empty %}
-            <li class="list-group-item text-muted">No subtasks.</li>
-          {% endfor %}
-        </ul>
+    <!-- Related teams list -->
+    <h3>Related Teams:</h3>
+    <ul class="list-group mb-3">
+      {% for team in task.teams.all %}
+      <li class="list-group-item">{{ team.name }}</li>
+      {% empty %}
+      <li class="list-group-item text-muted">No teams assigned.</li>
+      {% endfor %}
+    </ul>
 
-        <!-- Meta data -->
-        <div class="text-muted mt-3">
-          <p><strong>Created at:</strong> {{ task.created_at }}</p>
-          <p><strong>Last updated:</strong> {{ task.updated_at }}</p>
+    <!-- Subtask list -->
+    <h3>Subtasks:</h3>
+    <ul class="list-group mb-3">
+      {% for subtask in task.subtasks.all %}
+        <li class="list-group-item">{{ subtask.title }}</li>
+      {% empty %}
+        <li class="list-group-item text-muted">No subtasks.</li>
+      {% endfor %}
+    </ul>
 
-          {% if task.deadline %}
-            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-          {% endif %}
-        </div>
-      </div>
-    </main>
-    {% endblock %}
-  </body>
-</html>
+    <!-- Meta data -->
+    <div class="text-muted mt-3">
+      <p><strong>Created at:</strong> {{ task.created_at }}</p>
+      <p><strong>Last updated:</strong> {{ task.updated_at }}</p>
+
+      {% if task.deadline %}
+        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Update & Delete Buttons -->
+    <div class="mt-4">
+      <a href="{% url 'task:update_task' task.id %}" class="btn btn-warning me-2">Update</a>
+      <a href="{% url 'task:delete_task' task.id %}" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

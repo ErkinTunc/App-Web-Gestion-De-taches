@@ -2,10 +2,15 @@
 
 {% block body %}
 <main class="container my-5">
-  <form method="POST" class="card p-4 shadow-sm">
+  <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm"> <!-- enctype is necessary for imgs-->
     {% csrf_token %} <!-- this tag is used for security -->
     
-    {{ form.as_p }}
+    <h4>Account Info</h4>
+    {{ form.as_p}} <!-- changed from "user_form.as_p" -> form.as_p , note to myself: check the tags and dont spend unncesessaary time -->
+
+    <hr>
+    <h4>Profile Info</h4>
+    {{ profile_form.as_p }}
 
     <button type="submit" class="btn btn-primary mt-3">Save</button>
   </form>

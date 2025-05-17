@@ -46,11 +46,15 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+
 # Automatically create a UserProfile whenever a new User is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+
+
         
 # when user is deleted it Automatically cuts of all the relations user had.
 @receiver(post_delete, sender=User) 

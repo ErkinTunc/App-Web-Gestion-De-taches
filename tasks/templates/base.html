@@ -22,7 +22,7 @@
                 
                 {% if user.is_authenticated %}<!-- if you try to use get for Logout it will cause security problems sooo use Form instead of <a> -->
                     <a class="nav-link px-3" href="{% url 'task:create_task' %}">Add Task</a>
-                    <a class="nav-link px-3" href="#">Delete Item</a>
+                    <a class="nav-link px-3" href="{% url 'task:create_team' %}">Add Team</a>
                     
                     {% if user.userprofile %} <!-- user_profile_context will returns user_profile -->
                         <a class="nav-link px-3" href="{% url 'task:detail_user' request.user.userprofile.id %}">Your Profile</a>
