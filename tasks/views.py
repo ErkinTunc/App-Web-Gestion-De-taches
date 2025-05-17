@@ -20,6 +20,7 @@ def index(request):
         "task_list":task_list,
         "team_list":team_list,
         "user_list":user_list,
+        "current_user": request.user, # after login it contains current users information
     }
     return render(request,"index.html",context)
 
@@ -43,12 +44,12 @@ def detail_team(request,team_id):
     return render(request,"teams/detail.html",context)
 
 @login_required
-def detail_user(request,user_id):
-    user = UserProfile.objects.get(pk=user_id)
+def detail_user(request, user_id):
+    profile = UserProfile.objects.get(pk=user_id)
     context = {
-        "user":user,
+        "profile": profile, 
     }
-    return render(request,"users/detail.html",context)
+    return render(request, "users/detail.html", context)
 
 
 # =================== CREATE ====================

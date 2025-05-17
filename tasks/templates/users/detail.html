@@ -6,22 +6,22 @@
         <div class="row g-0">
             <!-- User image on the left -->
             <div class="col-md-5">
-                <img src="{{ user.image.url }}" alt="User Image" class="img-fluid h-100" style="object-fit: cover;">
+                <img src="{{ profile.image.url }}" alt="User Image" class="img-fluid h-100" style="object-fit: cover;">
             </div>
 
             <!-- User info on the right -->
             <div class="col-md-7 p-4">
-                <h2>{{ user.user.username }}</h2> <!-- --> 
+                <h2>{{ profile.user.username }}</h2> <!-- --> 
 
-                {% if user.description %}
-                <p><strong>Description:</strong> {{ user.description }}</p>
+                {% if profile.description %}
+                <p><strong>Description:</strong> {{ profile.description }}</p>
                 {% endif %}
 
                 <hr>
 
                 <h5>Teams</h5>
                 <ul class="list-group mb-3">
-                    {% for team in user.user.teams.all %}
+                    {% for team in profile.user.teams.all %}
                     <li class="list-group-item">{{ team.name }}</li>
                     {% empty %}
                     <li class="list-group-item text-muted">No teams yet.</li>
@@ -30,7 +30,7 @@
 
                 <h5>Assigned Tasks</h5>
                 <ul class="list-group">
-                    {% for task in user.user.tasks.all %}
+                    {% for task in profile.user.tasks.all %}
                     <li class="list-group-item">
                         <strong>{{ task.title }}</strong> – {{ task.status }}
                     </li>

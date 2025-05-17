@@ -19,11 +19,16 @@
             <a href="/" class="navbar-brand ms-3">TaskManager</a>
             
             <div class="navbar-nav flex-row ms-auto me-3">
-                <a class="nav-link px-3" href="{% url 'task:create_task' %}">Add Task</a>
-                <a class="nav-link px-3" href="#">Delete Item</a>
-                <a class="nav-link px-3" href="#">View Item</a>
-
+                
                 {% if user.is_authenticated %}<!-- if you try to use get for Logout it will cause security problems sooo use Form instead of <a> -->
+                    <a class="nav-link px-3" href="{% url 'task:create_task' %}">Add Task</a>
+                    <a class="nav-link px-3" href="#">Delete Item</a>
+                    
+                    {% if user.userprofile %} <!-- user_profile_context will returns user_profile -->
+                        <a class="nav-link px-3" href="{% url 'task:detail_user' request.user.userprofile.id %}">Your Profile</a>
+                    {% endif %}
+
+                    
                     <form method="POST" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-link nav-link px-3">
@@ -31,8 +36,8 @@
                         </button>
                     </form>  
                 {% else %} 
-                <a class="nav-link px-3" href="{% url 'login' %}">Login</a>
-                <a class="nav-link px-3" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link px-3" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link px-3" href="{% url 'register' %}">Register</a>
                 {% endif %}
             </div>
         </nav>
@@ -42,12 +47,13 @@
             <div class="alert alert-{{ message.tags }}">
                 {{ message }}
             </div>
-                
+               
             {% endfor %}
         {% endif %}
 
     </header>
-
+    <p style="color: red;">DEBUG: User is: {{ user }}</p> 
+    <p style="color: red;">Authenticated? {{ user.is_authenticated }}</p>
     {% block body %}
     {% endblock %}
 </body>
