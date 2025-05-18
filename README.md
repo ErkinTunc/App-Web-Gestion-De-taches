@@ -1,75 +1,80 @@
-# Application Web de Gestion-De-taches
+# Application Web de Gestion de Tâches
 
-> **Developeurs** : Erkin Tunc BOYA , Muhammed
-> **Techonlogies** : python Django, Bootstrap
+> **Développeurs** : Erkin Tunc BOYA, Muhammed  
+> **Technologies** : Python Django, Bootstrap
 
 ---
 
 ## Description
-C'est une application web multi-utilisateur qui nous permet de faire gestion de tache. Application est constuit avec Django et fait le styliing avec Bootstrap.
 
---- 
+C'est une application web multi-utilisateur permettant la gestion de tâches.  
+L'application est construite avec Django et utilise Bootstrap pour le style.
 
-## Comment Démarrer(How to run)
-1. **Clone the project**
+---
+
+## Comment démarrer
+
+1. **Cloner le projet**
 ```bash
 git clone <repo-url>
 cd App-Web-Gestion-De-taches
 ```
 
-2. **Installer Environment Virtual**
-Dans chaque ordinateur il faut l'installer on ne peut pas mettre sur le git car venv configure juste pour votre pc.
+2. **Créer un environnement virtuel**  
+Chaque ordinateur doit avoir son propre environnement virtuel (non partagé via Git).
 ```bash
 python -m venv tp-env
 ```
 
-4. **Ouvrir le Environment Virtuelle**
+3. **Activer l’environnement virtuel**
 ```bash
 # UNIX
 source tp-env/bin/activate
 # Windows
 tp-env\Scripts\activate
 ```
-3. **Installer dependencies**
+
+4. **Installer les dépendances**
 ```bash
-# Install Django
+# Installer Django
 python -m pip install Django
-# Pour Django (une pour les images)
+# Installer les dépendances (ex : pour la gestion d’images)
 pip install -r requirements.txt
 ```
 
-
-4. **Run the server**
+5. **Lancer le serveur**
 ```bash
-# Django
 python manage.py runserver
 ```
 
 ---
 
-## Fonctionalité
+## Fonctionnalités
 
--  Authentification : tous le monde doivent faire une login ou register pour entrer dans la site.
+- **Authentification** : chaque utilisateur doit se connecter ou s’inscrire pour accéder au site.
 
-####  Fonctionalite des Tache(Task)
-- Une tâche comporte un titre, un statut , une description une liste de sous-taches, une liste de personnes et une liste d'equipes rattachés.
-- Une tâche peut être privée : visible seulement par les personnes/équipes qui ont y été associes; ou publique
-- Utilisateur peut créer,modifier et supprimer une tache.
-- Quand un tache est supprimé tous ses relations avec des equipes et des personnes vont couper automatiqument.
+### Fonctionnalités des Tâches
 
-####  Fonctionalite des Equipe(Team)
-- Une équipe a un nom, liste de personne
-- Une personne peut créer, modifier, quitter et supprimer une equipe 
-- Quand un equipe est supprimé tous ses relations avec des taches et des personnes vont couper automatiqument.
+- Une tâche comporte un titre, un statut, une description, une liste de sous-tâches, une liste de personnes et une liste d'équipes associées.
+- Une tâche peut être privée (visible uniquement par les personnes/équipes associées) ou publique.
+- L'utilisateur peut créer, modifier et supprimer une tâche.
+- Lorsqu'une tâche est supprimée, tous ses liens avec les équipes et les personnes sont automatiquement supprimés.
 
-#### Fonctionalite des Personne(User)
-- Une personne a un Nom, un email, une description ,un mot de passe, une image
-- Une personne peut voir le profil d'une autre personne/équipe ainsi que les tâches publiques qui lui ont été assignées.
-- Quand un Personne est supprimé tous ses relations avec des taches et des equipes vont couper automatiqument.
+### Fonctionnalités des Équipes
+
+- Une équipe a un nom et une liste de personnes.
+- Un utilisateur peut créer, modifier, quitter et supprimer une équipe.
+- Lorsqu'une équipe est supprimée, tous ses liens avec les tâches et les personnes sont automatiquement supprimés.
+
+### Fonctionnalités des Utilisateurs
+
+- Un utilisateur a un nom, un e-mail, une description, un mot de passe et une image.
+- Un utilisateur peut consulter le profil d’un autre utilisateur/équipe, ainsi que les tâches publiques qui lui sont attribuées.
+- Lorsqu’un utilisateur est supprimé, toutes ses relations avec les tâches et les équipes sont automatiquement supprimées.
 
 ---
 
-## Les entités(Models) 
+## Modèles (Entities)
 
 ### Task
 ```json
@@ -78,16 +83,16 @@ python manage.py runserver
   "creator": User,
 
   "title": string,
-  "status": "todo" | "in_progress" | "done",
-  "description": String,
-  
+  "status": "todo" || "in_progress" || "done",
+  "description": string,
+
   "assigned_users": [User],
   "assigned_teams": [Team],
   "sub_tasks": [Task],
 
-  "created_at" : Date,
-  "updated_at" : Date, 
-  "deadline" : Date,
+  "created_at": Date,
+  "updated_at": Date, 
+  "deadline": Date
 }
 ```
 
@@ -100,61 +105,59 @@ python manage.py runserver
 ```
 
 ### User
-C'est class est une classe default
+Classe utilisateur par défaut :
 ```json
 {
   "id": int,
   "name": string,
   "email": string,
-  "password": string,
+  "password": string
 }
 ```
 
 ### UserProfile
-
 ```json
 {
-  "user" : User, // Relation one to one 
-
+  "user": User, // Relation un-à-un
   "description": string,
-  "image": *.png // Dans le dossier "pictures"
+  "image": *.png // Dossier "pictures"
 }
 ```
 
 ---
 
-## API URI
-- `GET /` – Page d'acceuil , il y a tous les taches
+## Routes API
 
-### Auth
-- `POST /register` – Crée personne
-- `POST /login` – Authenticate
-- `POST /logout` – Finir session
+### Page d’accueil
+- `GET /` – Affiche toutes les tâches
 
-### User
-- `GET /users/:id` – profile d'une personne , il y a aussi ses taches et ses equipes
-- `POST /users/add/` - crée une personne
-- `PUT /users/update/:id` - mise a jour le profile de personne
-- `DELETE /users/delete/:id` - supprimer la personne
+### Authentification
+- `POST /register` – Créer un compte
+- `POST /login` – Se connecter
+- `POST /logout` – Se déconnecter
 
+### Utilisateur
+- `GET /users/:id` – Voir le profil d’un utilisateur, ses tâches et ses équipes
+- `POST /users/add/` – Créer un utilisateur
+- `PUT /users/update/:id` – Mettre à jour le profil
+- `DELETE /users/delete/:id` – Supprimer un utilisateur
 
-### Team
-- `GET /teams/:id` – profile d'une tache
-- `POST /teams/add` – Create equipe
-- `PUT /teams/update/:id` - mise a jour le profile de equipe
-- `DELETE /teams/delete/:id` - supprimer la equipe
+### Équipe
+- `GET /teams/:id` – Voir le profil d’une équipe
+- `POST /teams/add` – Créer une équipe
+- `PUT /teams/update/:id` – Mettre à jour une équipe
+- `DELETE /teams/delete/:id` – Supprimer une équipe
+- `POST /teams/:id/join` – Rejoindre une équipe
+- `POST /teams/:id/leave` – Quitter une équipe
 
-- `POST /teams/:id/join` – Join
-- `POST /teams/:id/leave` – Leave
+### Tâche
+- `GET /tasks/:id` – Voir une tâche
+- `POST /tasks/add` – Créer une tâche
+- `PUT /tasks/update/:id` – Mettre à jour une tâche
+- `DELETE /tasks/delete/:id` – Supprimer une tâche
 
-### Task
-- `GET /tasks/:id` – profile d'une tache
-- `POST /tasks/add` – Create equipe
-- `PUT /tasks/update/:id` - mise a jour le profile de equipe
-- `DELETE /tasks/delete/:id` - supprimer la equipe
+- `POST /tasks/:id/assign/user/:userId` – Assigner un utilisateur à une tâche
+- `POST /tasks/:id/unassign/user/:userId` – Retirer un utilisateur d’une tâche
 
-- `POST /tasks/:id/assign/user/:userId` – Assign user
-- `POST /tasks/:id/unassign/user/:userId` – Unassign user
-
-- `POST /tasks/:id/assign/team/:teamId` – Assign team adds one of your teams
-- `POST /tasks/:id/unassign/team/:teamId` – Unassign team
+- `POST /tasks/:id/assign/team/:teamId` – Assigner une équipe
+- `POST /tasks/:id/unassign/team/:teamId` – Retirer une équipe
