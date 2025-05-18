@@ -36,5 +36,5 @@ urlpatterns = [
 
 
     # Hellow World URL
-    path("item/",views.item,name="item"),
+    # path("item/",views.item,name="item"),
 ]

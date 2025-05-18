@@ -21,10 +21,14 @@ class Task(models.Model):
         ('in_progress', 'In Progress'),
         ('done', 'Done'),
     ]
+    
+    private = models.BooleanField(blank=False,default=False) # if it is false every one can see it , users & teams associated 
+    creator = models.ForeignKey(User,on_delete=models.CASCADE, related_name='created_tasks')
 
     title = models.CharField(max_length=200)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
     description = models.TextField(blank=True)
+    
     users = models.ManyToManyField(User, related_name='tasks')  # Users assigned to the task
     teams = models.ManyToManyField(Team, related_name='tasks' , blank=True)  # Teams related to the task
     subtasks = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='parent_tasks')  # Optional sub-task linkage
@@ -48,6 +52,7 @@ class UserProfile(models.Model):
 
 
 
+
 # Automatically create a UserProfile whenever a new User is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -55,7 +60,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
 
-        
+ 
 # when user is deleted it Automatically cuts of all the relations user had.
 @receiver(post_delete, sender=User) 
 def remove_user_from_related(sender, instance, **kwargs):

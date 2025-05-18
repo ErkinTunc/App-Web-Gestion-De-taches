@@ -80,7 +80,10 @@ def create_task(request):
     form = TaskForm(request.POST or None)
 
     if form.is_valid():
-        form.save()
+        task = form.save(commit=False) # Create task instance, but not saved yet
+        task.creator = request.user # Set the current user as the creator
+        task.save() # Save the task with the creator
+        form.save_m2m()  # Save many-to-many fields (users, teams, subtasks) | if not it causes problems
         return redirect("task:index")
 
     return render(request, "tasks/task-form.html", {"form": form})
