@@ -38,8 +38,8 @@ tp-env\Scripts\activate
 ```bash
 # Installer Django
 python -m pip install Django
-# Installer les dépendances (ex : pour la gestion d’images)
-pip install -r requirements.txt
+# Installer les dépendances 
+pip install Pillow (pour la gestion d’images)
 ```
 
 5. **Lancer le serveur**
