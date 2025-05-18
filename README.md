@@ -38,8 +38,8 @@ tp-env\Scripts\activate
 ```bash
 # Installer Django
 python -m pip install Django
-# Installer les dépendances 
-pip install Pillow (pour la gestion d’images)
+# Installer les dépendances (pour la gestion d’images)
+pip install Pillow 
 ```
 
 5. **Lancer le serveur**
@@ -82,6 +82,7 @@ python manage.py runserver
 ├── manage.py
 ├── pictures
 │     └── profile_pictures
+│     └── favicon
 ├── task_manager # la coeur d'application
 ├── tasks # App contenant tous les modèles de User,Team et Task
 ├── tp-env # l’environnement virtuel
