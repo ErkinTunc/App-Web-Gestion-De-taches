@@ -1,6 +1,6 @@
 # Application Web de Gestion de Tâches
 
-> **Développeurs** : Erkin Tunc BOYA, Muhammed  
+> **Développeurs** : Erkin Tunc BOYA, Mohamed Saidane  
 > **Technologies** : Python Django, Bootstrap
 
 ---
