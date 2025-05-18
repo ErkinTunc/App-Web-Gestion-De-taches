@@ -161,3 +161,19 @@ Classe utilisateur par défaut :
 
 - `POST /tasks/:id/assign/team/:teamId` – Assigner une équipe
 - `POST /tasks/:id/unassign/team/:teamId` – Retirer une équipe
+
+---
+
+## Structure de projet
+
+```bash
+├── README.md
+├── db.sqlite3
+├── manage.py
+├── pictures
+│     └── profile_pictures
+├── task_manager # la coeur d'application
+├── tasks # App contenant tous les modèles de User,Team et Task
+├── tp-env # l’environnement virtuel
+└── users # App utilisée pour l' Authentification
+```
