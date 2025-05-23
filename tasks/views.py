@@ -182,6 +182,39 @@ def delete_task(request, id):
 
     return render(request, 'tasks/task-delete.html', {'task': task})
 
+# ================= Enter ==========================
+@login_required
+def enter_team(request, team_id, user_id):
+    
+    user_profile = get_object_or_404(UserProfile, id=user_id)
+    user = user_profile.user
+    
+    team = Team.objects.get(id=team_id)
+    
+    if request.method == 'POST': # Django doesnt support PATCH --> use POST instead
+        team.users.add(user) # added user to the team
+        team.save()
+        return render(request, "teams/teams/id", {"id": team_id})
+    
+    
+    
+# ================= Leave ==========================
+
+@login_required
+def leave_team(request, team_id, user_id):
+    
+    user_profile = get_object_or_404(UserProfile, id=user_id)
+    user = user_profile.user
+    
+    team = Team.objects.get(id=team_id)
+    if request.method == 'POST':
+        try:
+            team.users.remove(user) # added user to the team
+        except ValueError:
+            print("There is a problem while leaving from team with <" + team_id + "> team id")
+        team.save()
+        return render(request, "teams/teams/id", {"id": team_id})
+    
 
 # ================= HELLO WORLD ==========================
 

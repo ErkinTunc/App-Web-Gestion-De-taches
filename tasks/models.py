@@ -67,7 +67,13 @@ def remove_user_from_related(sender, instance, **kwargs):
     instance.tasks.clear()
     instance.teams.clear()
     
-# when team is deleted program automatically cuts of all the relations user had.
+# when team is deleted program automatically cuts of all the relations team had.
 @receiver(post_delete, sender=Team)
-def remove_team_from_tasks(sender, instance, **kwargs):
+def remove_team_related(sender, instance, **kwargs):
     instance.tasks.clear()
+    
+# when task is deleted program automatically cuts of all the relations task had.
+@receiver(post_delete, sender=Task)
+def remove_tasks_related(sender, instance, **kwargs):
+    instance.teams.clear()
+    instance.users.clear()
