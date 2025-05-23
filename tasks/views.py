@@ -14,14 +14,24 @@ from django.http import HttpResponse
 
 @login_required
 def index(request):
-    task_list = Task.objects.all()
+    task_list = Task.objects.all() # rn they (task_list) are objects
     team_list = Team.objects.all()
     user_list = UserProfile.objects.all()
+    
+    task_count = task_list.count() # count metod counts all the elements in the list
+    team_count = team_list.count()
+    user_count = user_list.count()
+    
     # template = loader.get_template("tasks/index.html") # with the help of loader we save the html like an variable.
     context = { # we use this to create dynamique pages we use this variable as an attribute | we use the content in it like objects
         "task_list":task_list,
         "team_list":team_list,
         "user_list":user_list,
+        
+        "user_count": user_count,
+        "team_count": team_count,
+        'task_count': task_count,
+        
         "current_user": request.user, # after login it contains current users information
     }
     return render(request,"index.html",context)
@@ -103,8 +113,7 @@ def update_user(request, id):  # TODO: Should make it right it is creating new u
             user_form.save()
             profile_form.save() # saving the modified data
 
-            login(request, user)  # re-login updated user
-            messages.success(request, "User has been updated!!!") # Test-if it does not work delete me ":(" --> it works ":)"
+            messages.success(request, "User has been updated!!!") 
             return redirect("task:index")  # go back to index after update
 
         return render(request, 'users/user-form.html', {

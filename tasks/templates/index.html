@@ -36,7 +36,7 @@
         <!-- Tasks -->
         <article class="col-lg-4 mb-4">
             <h4>Tasks</h4>
-            <div class="list-group">
+            <ul class="list-group">
                 {% for task in task_list %}
                     <a href="{% url 'task:detail_task' task.id %}" class="list-group-item list-group-item-action">
                         {{ task.id }} — {{ task.title }} — {{ task.status|default:"todo" }}
@@ -44,13 +44,13 @@
                 {% empty %}
                     <div class="list-group-item">No tasks available.</div>
                 {% endfor %}
-            </div>
+            </ul>
         </article>
 
         <!-- Teams -->
         <article class="col-lg-4 mb-4">
             <h4>Teams</h4>
-            <div class="list-group">
+            <ul class="list-group">
                 {% for team in team_list %}
                     <a href="{% url 'task:detail_team' team.id %}" class="list-group-item list-group-item-action">
                         {{ team.id }} — {{ team.name }}
@@ -58,13 +58,13 @@
                 {% empty %}
                     <div class="list-group-item">No teams available.</div>
                 {% endfor %}
-            </div>
+            </ul>
         </article>
 
         <!-- Users -->
         <article class="col-lg-4 mb-4">
             <h4>Users</h4>
-            <div class="list-group">
+            <ul class="list-group">
                 {% for user in user_list %}
                     <a href="{% url 'task:detail_user' user.id %}" class="list-group-item list-group-item-action">
                         {{ user.id }} — {{ user.user.username }}
@@ -72,7 +72,7 @@
                 {% empty %}
                     <div class="list-group-item">No users available.</div>
                 {% endfor %}
-            </div>
+            </ul>
         </article>
     </section>
 

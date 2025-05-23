@@ -23,11 +23,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    
+    # Admin panel
     path('admin/', admin.site.urls),
+    
+    # Home page and task,team,user related URL's
     path('',include("tasks.urls")),
+    
+    # Authentification
     path("register/",user_views.register,name="register"),
     path("login/", authentication_views.LoginView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", authentication_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
- + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # we added this for using our static files
