@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from .models import Team , Task , UserProfile # importing from models.py Item sql table
 from django.template import loader
 from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfileUpdateForm 
-from .decorators import allowed_users
+
 # Create your views here.
 from django.http import HttpResponse
 
@@ -69,6 +69,9 @@ def detail_user(request, user_id):
 def create_user(request):
     form = CustomUserForm(request.POST or None)
 
+    if request.user.is_superuser: # Only admin can create a user
+        return HttpResponse("Only superusers can create new users.")
+
     if form.is_valid():
         form.save()
         return redirect("task:index")
@@ -101,35 +104,38 @@ def create_task(request):
 # ================== UPDATE =====================
 
 @login_required
-@allowed_users(allowed_roles=["Admin"])
 def update_user(request, id):  # TODO: Should make it right it is creating new users
     user_profile = get_object_or_404(UserProfile, id=id)
     user = user_profile.user
 
-    if request.user.is_authenticated:
-        user_form = UserUpdateForm(request.POST or None, instance=user)  # instance=user will put all the info of the user into our form
-        profile_form = UserProfileUpdateForm(request.POST or None, request.FILES or None, instance=user_profile)  # extra user info && dont fotget to add 2 formats into the html page
+    if request.user != user and not request.user.is_superuser: # you shall not pass (unless y are superuser or profileOwner)
+        return HttpResponse("You are not authorized to update this profile.")
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save() # saving the modified data
 
-            messages.success(request, "User has been updated!!!") 
-            return redirect("task:index")  # go back to index after update
+    user_form = UserUpdateForm(request.POST or None, instance=user)  # instance=user will put all the info of the user into our form
+    profile_form = UserProfileUpdateForm(request.POST or None, request.FILES or None, instance=user_profile)  # extra user info && dont fotget to add 2 formats into the html page
 
-        return render(request, 'users/user-form.html', {
-            'form': user_form,
-            'profile_form': profile_form,
-            'user': user
-        })
+    if user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save() # saving the modified data
 
-    else:
-        return redirect("login")  # if not authenticated && we are already guarding it with "@login_required" but it also helps
-    
+        messages.success(request, "User has been updated!!!") 
+        return redirect("task:index")  # go back to index after update
+
+    return render(request, 'users/user-form.html', {
+        'form': user_form,
+        'profile_form': profile_form,
+        'user': user
+    })
+
 @login_required
 def update_team(request, id):
     team = Team.objects.get(id=id)
     form = TeamForm(request.POST or None, instance=team)
+
+    
+    if (request.user  not in team.users.all()) and not request.user.is_superuser: # you shall not pass (unless y are superuser or in the team)
+        return HttpResponse("You are not authorized to update this profile.")
 
     if form.is_valid():
         form.save()
@@ -141,6 +147,15 @@ def update_team(request, id):
 def update_task(request, id):
     task = Task.objects.get(id=id)
     form = TaskForm(request.POST or None, instance=task)
+
+    in_any_team = False #checks if any user is in one of the teams assaigned on to the task
+    for team in task.teams.all():
+        if request.user in team.users.all():
+            in_any_team = True
+
+    if (not in_any_team) and (request.user != task.creator) and (request.user  not in task.users.all()) and not request.user.is_superuser: # you shall not pass (unless y are superuser or in the team)
+        return HttpResponse("You are not authorized to update this profile.")
+
 
     if form.is_valid():
         form.save()
@@ -157,6 +172,9 @@ def delete_user(request, id):
     # user because it is the main one and we make relations with teams and tasks with 
     # user class not with the other
 
+    if request.user != user and not request.user.is_superuser: # you shall not pass (unless y are superuser or profileOwner)
+        return HttpResponse("You are not authorized to delete this profile.")
+
     if request.method == 'POST':
         user.delete()
         return redirect('task:index')
@@ -166,6 +184,9 @@ def delete_user(request, id):
 @login_required
 def delete_team(request, id):
     team = Team.objects.get(id=id)
+    
+    if (request.user  not in team.users.all()) and not request.user.is_superuser: # you shall not pass (unless y are superuser or in the team)
+        return HttpResponse("You are not authorized to delete this team.")
 
     if request.method == 'POST':
         team.delete()
@@ -174,9 +195,12 @@ def delete_team(request, id):
     return render(request, 'teams/team-delete.html', {'team': team})
 
 @login_required
-@allowed_users(allowed_roles=["admin"])
 def delete_task(request, id):
     task = Task.objects.get(id=id)
+    
+    if (request.user != task.creator) and not request.user.is_superuser: # you shall not pass (unless y are superuser or in the team)
+        return HttpResponse("You are not authorized to delete this. Only the creator of this task can delete it")
+
 
     if request.method == 'POST':
         task.delete()
