@@ -2,50 +2,52 @@
 
 {% block body %}
 <main class="container my-5">
-    <div class="card shadow-lg">
-        <div class="row g-0">
-            <!-- User image on the left -->
-            <div class="col-md-5">
-                <img src="{{ profile.image.url }}" alt="User Image" class="img-fluid h-100" style="object-fit: cover;">
-            </div>
+  <div class="card shadow-lg">
+    <div class="row g-0">
+      <!-- User image on the left -->
+      <div class="col-md-5">
+        <img src="{{ profile.image.url }}" alt="User Image" class="img-fluid h-100" style="object-fit: cover;">
+      </div>
 
-            <!-- User info on the right -->
-            <div class="col-md-7 p-4">
-                <h2>{{ profile.user.username }}</h2> <!-- --> 
+      <!-- User info on the right -->
+      <div class="col-md-7 p-4">
+        <h2>{{ profile.user.username }}</h2> <!-- -->
 
-                {% if profile.description %}
-                <p><strong>Description:</strong> {{ profile.description }}</p>
-                {% endif %}
+        {% if profile.description %}
+        <p><strong>Description:</strong> {{ profile.description }}</p>
+        {% endif %}
 
-                <hr>
+        <hr>
 
-                <h5>Teams</h5>
-                <ul class="list-group mb-3">
-                    {% for team in profile.user.teams.all %}
-                    <li class="list-group-item">{{ team.name }}</li>
-                    {% empty %}
-                    <li class="list-group-item text-muted">No teams yet.</li>
-                    {% endfor %}
-                </ul>
+        <h5>Teams</h5>
+        <ul class="list-group mb-3">
+          {% for team in profile.user.teams.all %}
+          <li class="list-group-item">{{ team.name }}</li>
+          {% empty %}
+          <li class="list-group-item text-muted">No teams yet.</li>
+          {% endfor %}
+        </ul>
 
-                <h5>Assigned Tasks</h5>
-                <ul class="list-group">
-                    {% for task in profile.user.tasks.all %}
-                    <li class="list-group-item">
-                        <strong>{{ task.title }}</strong> – {{ task.status }}
-                    </li>
-                    {% empty %}
-                    <li class="list-group-item text-muted">No tasks assigned.</li>
-                    {% endfor %}
-                </ul>
+        <h5>Assigned Tasks</h5>
+        <ul class="list-group">
+          {% for task in profile.user.tasks.all %}
+          <li class="list-group-item">
+            <strong>{{ task.title }}</strong> – {{ task.status }}
+          </li>
+          {% empty %}
+          <li class="list-group-item text-muted">
+            No tasks assigned.
+          </li>
+          {% endfor %}
+        </ul>
 
-                <hr>
-                <div class="mt-3">
-                    <a href="{% url 'task:update_user' profile.id %}" class="btn btn-warning me-2">Update User Profile</a>
-                    <a href="{% url 'task:delete_user' profile.id %}" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
+        <hr>
+        <div class="mt-3">
+          <a href="{% url 'task:update_user' profile.id %}" class="btn btn-warning me-2">Update User Profile</a>
+          <a href="{% url 'task:delete_user' profile.id %}" class="btn btn-danger">Delete</a>
         </div>
+      </div>
     </div>
+  </div>
 </main>
 {% endblock %}

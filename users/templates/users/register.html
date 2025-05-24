@@ -1,13 +1,16 @@
-{% extends 'base.html' %}
-
-{% block body %}
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-  <div class="card p-4 shadow" style="min-width: 320px; max-width: 800px; width: 100%;">
+{% extends 'base.html' %} {% block body %}
+<div
+  class="container d-flex justify-content-center align-items-center"
+  style="min-height: 80vh"
+>
+  <div
+    class="card p-4 shadow"
+    style="min-width: 320px; max-width: 800px; width: 100%"
+  >
     <h3 class="text-center mb-4">Create an Account</h3>
 
     <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
+      {% csrf_token %} {{ form.as_p }}
       <div class="d-grid">
         <button type="submit" class="btn btn-primary">Sign Up</button>
       </div>
