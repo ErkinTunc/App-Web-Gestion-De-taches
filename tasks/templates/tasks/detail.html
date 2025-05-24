@@ -71,6 +71,10 @@
 
     <!-- Update & Delete Buttons -->
     <div class="mt-4">
+        <form action="{% url 'task:create_sub_task' task.id %}" method="POST" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Create Sub-Task</button>
+        </form>
       <a href="{% url 'task:update_task' task.id %}" class="btn btn-warning me-2">Update</a>
       <a href="{% url 'task:delete_task' task.id %}" class="btn btn-danger">Delete</a>
     </div>

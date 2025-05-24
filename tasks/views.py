@@ -101,6 +101,38 @@ def create_task(request):
 
     return render(request, "tasks/task-form.html", {"form": form})
 
+@login_required
+def create_sub_task(request,task_id):
+    
+    task = Task.objects.get(id=task_id)
+    # Cheking autorization
+    in_any_team = False #checks if any user is in one of the teams assaigned on to the task
+    for team in task.teams.all():
+        if request.user in team.users.all():
+            in_any_team = True
+
+    if (not in_any_team) and (request.user != task.creator) and (request.user  not in task.users.all()) and not request.user.is_superuser: # you shall not pass (unless y are superuser or in the team)
+        return HttpResponse("You are not authorized to create an sub-task for this task")
+
+    # Creation of sub-task , (we can not use the create_task function because if we do we can not link task and sub-task)
+    form = TaskForm(request.POST or None)
+
+    if form.is_valid():
+        sub_task = form.save(commit=False) 
+        sub_task.creator = request.user 
+        sub_task.save() 
+        form.save_m2m() 
+        
+        # we are saving sub-task to task
+        task.subtasks.add(sub_task)
+        task.save()
+        
+        return redirect("task:index")
+
+    return render(request, "tasks/task-form.html", {"form": form})
+    
+    
+
 # ================== UPDATE =====================
 
 @login_required
