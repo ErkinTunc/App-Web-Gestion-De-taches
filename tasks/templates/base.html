@@ -63,8 +63,31 @@
     </header>
     <p style="color: red;">DEBUG: User is: {{ user }}</p> 
     <p style="color: red;">Authenticated? {{ user.is_authenticated }}</p>
+
+    <!-- ====== !!!! ========== -->
     {% block body %}
     {% endblock %}
+    <!-- ====== !!!! ========== -->
+
+    <footer>
+      <ul>
+        <li>
+          <a href="https://www.instagram.com/">
+            <img
+              src="/pictures/icons/insta.png"
+              alt="Instagram logo link to social media page"
+          /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/">
+            <img
+              src="/pictures/icons/facebook.png"
+              alt="Facebook logo link to social media page"
+            />
+          </a>
+        </li>
+      </ul>
+    </footer>
 </body>
 
 </html>
