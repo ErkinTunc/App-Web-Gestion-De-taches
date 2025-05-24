@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from .models import Team , Task , UserProfile # importing from models.py Item sql table
 from django.template import loader
 from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfileUpdateForm 
-
+from .decorators import allowed_users
 # Create your views here.
 from django.http import HttpResponse
 
@@ -101,6 +101,7 @@ def create_task(request):
 # ================== UPDATE =====================
 
 @login_required
+@allowed_users(allowed_roles=["Admin"])
 def update_user(request, id):  # TODO: Should make it right it is creating new users
     user_profile = get_object_or_404(UserProfile, id=id)
     user = user_profile.user
@@ -173,6 +174,7 @@ def delete_team(request, id):
     return render(request, 'teams/team-delete.html', {'team': team})
 
 @login_required
+@allowed_users(allowed_roles=["admin"])
 def delete_task(request, id):
     task = Task.objects.get(id=id)
 
