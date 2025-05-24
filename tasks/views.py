@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login # might be deleted in the future
 from django.contrib import messages # might be deleted in the future
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from .models import Team , Task , UserProfile # importing from models.py Item sql table
 from django.template import loader
 from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfileUpdateForm 
@@ -189,14 +189,15 @@ def enter_team(request, team_id, user_id):
     user_profile = get_object_or_404(UserProfile, id=user_id)
     user = user_profile.user
     
-    team = Team.objects.get(id=team_id)
+    team = get_object_or_404(Team, id=team_id)
     
     if request.method == 'POST': # Django doesnt support PATCH --> use POST instead
         team.users.add(user) # added user to the team
         team.save()
-        return render(request, "teams/teams/id", {"id": team_id})
+        return redirect('task:detail_team', team_id=team.id) 
     
-    
+    # for GET
+    return redirect('task:detail_team', team_id=team.id)
     
 # ================= Leave ==========================
 
@@ -205,16 +206,19 @@ def leave_team(request, team_id, user_id):
     
     user_profile = get_object_or_404(UserProfile, id=user_id)
     user = user_profile.user
-    
     team = Team.objects.get(id=team_id)
+    
     if request.method == 'POST':
+        
         try:
             team.users.remove(user) # added user to the team
         except ValueError:
             print("There is a problem while leaving from team with <" + team_id + "> team id")
         team.save()
-        return render(request, "teams/teams/id", {"id": team_id})
+        return redirect('task:detail_team', team_id=team.id)
     
+    # for GET
+    return redirect('task:detail_team', team_id=team.id)
 
 # ================= HELLO WORLD ==========================
 

@@ -23,6 +23,8 @@ urlpatterns = [
     path("teams/add", views.create_team, name="create_team"),
     path("teams/update/<int:id>/", views.update_team, name="update_team"),
     path("teams/delete/<int:id>/", views.delete_team, name="delete_team"),
+    path("teams/<int:team_id>/enter/<int:user_id>/", views.enter_team, name="enter_team"), # ex: /team/1/enter/7
+    path("teams/<int:team_id>/leave/<int:user_id>/", views.leave_team, name="leave_team"), # ex: /team/1/leave/7
     
     # Tasks
     path("tasks/<int:task_id>/", views.detail_task, name="detail_task"), # ex: /task/1
