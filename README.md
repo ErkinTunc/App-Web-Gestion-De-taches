@@ -104,26 +104,22 @@ python manage.py runserver
 ### Utilisateur
 - `GET /users/:id` – Voir le profil d’un utilisateur, ses tâches et ses équipes
 - `POST /users/add/` – Créer un utilisateur
-- `PUT /users/update/:id` – Mettre à jour le profil
-- `DELETE /users/delete/:id` – Supprimer un utilisateur
+- `POST /users/update/:id` – Mettre à jour le profil
+- `POST /users/delete/:id` – Supprimer un utilisateur
 
 ### Équipe
 - `GET /teams/:id` – Voir le profil d’une équipe
 - `POST /teams/add` – Créer une équipe
-- `PUT /teams/update/:id` – Mettre à jour une équipe
-- `DELETE /teams/delete/:id` – Supprimer une équipe
-- `POST /teams/:id/join` – Rejoindre une équipe
-- `POST /teams/:id/leave` – Quitter une équipe
+- `POST /teams/update/:id` – Mettre à jour une équipe
+- `POST /teams/delete/:id` – Supprimer une équipe
+- `POST /teams/:id/enter/:user-id` – Rejoindre une équipe
+- `POST /teams/:id/leave/:user-id` – Quitter une équipe
 
 ### Tâche
 - `GET /tasks/:id` – Voir une tâche
 - `POST /tasks/add` – Créer une tâche
-- `PUT /tasks/update/:id` – Mettre à jour une tâche
-- `DELETE /tasks/delete/:id` – Supprimer une tâche
-
-- `POST /tasks/:id/assign/user/:userId` – Assigner un utilisateur à une tâche
-- `POST /tasks/:id/unassign/user/:userId` – Retirer un utilisateur d’une tâche
-
+- `POST /tasks/update/:id` – Mettre à jour une tâche
+- `POST /tasks/delete/:id` – Supprimer une tâche
 - `POST /tasks/:id/assign/team/:teamId` – Assigner une équipe
 - `POST /tasks/:id/unassign/team/:teamId` – Retirer une équipe
 
@@ -141,9 +137,9 @@ python manage.py runserver
   "status": "todo" || "in_progress" || "done",
   "description": string,
 
-  "assigned_users": [User],
-  "assigned_teams": [Team],
-  "sub_tasks": [Task],
+  "users": [User],
+  "teams": [Team],
+  "subtasks": [Task],
 
   "created_at": Date,
   "updated_at": Date, 
