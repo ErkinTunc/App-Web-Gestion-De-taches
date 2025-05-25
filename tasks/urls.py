@@ -6,12 +6,17 @@ app_name = "task"
 
 urlpatterns = [
     
+    
+    # Home Page for Admin
+    path("control-panel/", views.admin_index, name="admin_index"),
+    
     # Home Page
     path("", views.index, name="index"), # we remoed it because we wont create other applications 
         # In here if we want to show URL like this"/index"  
         # we write like this
         # if not leave a blank "".
-
+        
+    
     # Users
     path("users/<int:user_id>/", views.detail_user, name="detail_user"), # ex:  /user/1
     path("users/add", views.create_user, name="create_user"),

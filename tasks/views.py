@@ -36,6 +36,27 @@ def index(request):
     }
     return render(request,"index.html",context)
 
+
+# ================= ADMIN-INDEX =====================
+
+@login_required
+def admin_index(request):
+    task_list = Task.objects.all()
+    
+    public_task_lists = []
+    users_task_list = []
+    
+    for task in task_list:
+        if task.private == False :
+            public_task_lists.append(task)
+    
+    current_user = request.user
+    
+    context = {
+        "current_user":current_user,
+    }
+    return render(request,"admin-index.html",context)
+
 # ======================= DETAILS =====================
 # leads us to details.html pages
 
@@ -149,7 +170,7 @@ def create_sub_team(request,task_id):
 
     if form.is_valid():
         sub_team = form.save(commit=False)
-        
+         
         sub_team.save()
         task.teams.add(sub_team) # first save team to server then add in to the task
         
