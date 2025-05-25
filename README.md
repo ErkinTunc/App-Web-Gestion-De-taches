@@ -123,8 +123,8 @@ python manage.py runserver
 - `POST /tasks/add` – Créer une tâche
 - `POST /tasks/update/:id` – Mettre à jour une tâche
 - `POST /tasks/delete/:id` – Supprimer une tâche
-- `POST tasks/:id/add-sub-task` – Assigner une sous-tache
-- `POST tasks/:id/add-sub-team` – Assigner une équipe
+- `POST tasks/:id/add-sub-task` – Créer et Assigner une sous-tache
+- `POST tasks/:id/add-sub-team` – Créer et Assigner une équipe
 
 ---
 
@@ -170,11 +170,16 @@ Classe utilisateur par défaut :
 ```
 
 ### UserProfile
-```json
+```bash
 {
   "user": User, // Relation un-à-un
   "description": string,
-  "image": *.png // Dossier "pictures"
+  "image": *.png // généralement au format .png ou autre | Dossier "pictures"
 }
 ```
+
+---
+
+## Répertoire Git
+Pour accéder au répertoire, [cliquez ici](https://github.com/ErkinTunc/App-Web-Gestion-De-taches)
 
