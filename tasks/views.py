@@ -10,10 +10,10 @@ from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfil
 # Create your views here.
 from django.http import HttpResponse
 
-# ================= INDEX =====================
+# ================= ADMIN-INDEX =====================
 
 @login_required
-def index(request):
+def admin_index(request):
     task_list = Task.objects.all() # rn they (task_list) are objects
     team_list = Team.objects.all()
     user_list = UserProfile.objects.all()
@@ -34,28 +34,35 @@ def index(request):
         
         "current_user": request.user, # after login it contains current users information
     }
-    return render(request,"index.html",context)
+    return render(request,"admin-index.html",context)
 
 
-# ================= ADMIN-INDEX =====================
+# ================= INDEX =====================
 
 @login_required
-def admin_index(request):
+def index(request):
     task_list = Task.objects.all()
+    team_list = Team.objects.all()
+    
+    current_user = request.user
     
     public_task_lists = []
-    users_task_list = []
+    users_task_list = current_user.tasks.all()
+    
+    users_team = current_user.teams.all()
     
     for task in task_list:
         if task.private == False :
             public_task_lists.append(task)
     
-    current_user = request.user
     
     context = {
         "current_user":current_user,
+        "public_task_list":public_task_lists,
+        "users_task_list":users_task_list,
+        "users_team":users_team
     }
-    return render(request,"admin-index.html",context)
+    return render(request,"index.html",context)
 
 # ======================= DETAILS =====================
 # leads us to details.html pages

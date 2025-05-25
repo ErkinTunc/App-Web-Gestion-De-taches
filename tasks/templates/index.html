@@ -1,87 +1,48 @@
 {% extends 'base.html' %} {% block body %}
-<div class="container my-4">
-  <!-- Summary Cards -->
-  <section class="row text-center mb-5">
-    <article class="col-md-4 mb-3">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Total Tasks</h5>
-          <p class="card-text display-6">{{ task_count }}</p>
-        </div>
-      </div>
-    </article>
 
-    <article class="col-md-4 mb-3">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Total Teams</h5>
-          <p class="card-text display-6">{{ team_count }}</p>
-        </div>
-      </div>
-    </article>
+<section>
+  <h1>Public Tasks</h1>
+  <ul>
+    {% for task in public_task_list %}
 
-    <article class="col-md-4 mb-3">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Total Users</h5>
-          <p class="card-text display-6">{{ user_count }}</p>
-        </div>
-      </div>
-    </article>
-  </section>
+    <li>
+      <a href="{% url 'task:detail_task' task.id %}">id: {{ task.id }} -- {{ task.title }} -- {{task.status}} </a>
+    </li>
 
-  <!-- List Sections -->
-  <section class="row">
-    <!-- Tasks -->
-    <article class="col-lg-4 mb-4">
-      <h4>Tasks</h4>
-      <ul class="list-group">
-        {% for task in task_list %}
-        <a
-          href="{% url 'task:detail_task' task.id %}"
-          class="list-group-item list-group-item-action"
-        >
-          {{ task.id }} — {{ task.title }} — {{ task.status|default:"todo" }}
-        </a>
-        {% empty %}
-        <div class="list-group-item">No tasks available.</div>
-        {% endfor %}
-      </ul>
-    </article>
+    {% empty %}
+    <p>There are no tasks avaible.</p>
+    {% endfor %}
+  </ul>
+</section>
 
-    <!-- Teams -->
-    <article class="col-lg-4 mb-4">
-      <h4>Teams</h4>
-      <ul class="list-group">
-        {% for team in team_list %}
-        <a
-          href="{% url 'task:detail_team' team.id %}"
-          class="list-group-item list-group-item-action"
-        >
-          {{ team.id }} — {{ team.name }}
-        </a>
-        {% empty %}
-        <div class="list-group-item">No teams available.</div>
-        {% endfor %}
-      </ul>
-    </article>
+<section>
+  <h1>{{ current_user.username }}'s Tasks :</h1>
+  <ul>
+    {% for task in users_task_list %}
 
-    <!-- Users -->
-    <article class="col-lg-4 mb-4">
-      <h4>Users</h4>
-      <ul class="list-group">
-        {% for user in user_list %}
-        <a
-          href="{% url 'task:detail_user' user.id %}"
-          class="list-group-item list-group-item-action"
-        >
-          {{ user.id }} — {{ user.user.username }}
-        </a>
-        {% empty %}
-        <div class="list-group-item">No users available.</div>
-        {% endfor %}
-      </ul>
-    </article>
-  </section>
-</div>
+    <li>
+      <a href="{% url 'task:detail_task' task.id %}">id: {{ task.id }} -- {{ task.title }} -- {{task.status}}</a>
+    </li>
+
+    {% empty %}
+    <p>You {{ current_user.username }} have no tasks</p>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h1>{{ current_user.username }}'s Teams :</h1>
+  <ul>
+    {% for team in users_team %}
+
+    <li>
+      <a href="{% url 'task:detail_team' team.id %}">id: {{ team.id }} -- {{ team.name }}</a>
+    </li>
+
+    {% empty %}
+    <p>You {{ current_user.username }} are not part of any teams</p>
+    {% endfor %}
+  </ul>
+</section>
+
 {% endblock %}
