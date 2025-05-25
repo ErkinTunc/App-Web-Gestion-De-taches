@@ -4,7 +4,7 @@
     <form method="POST">
       {% csrf_token %}
       <h2>Are you sure you want to delete {{ team.name }}</h2>
-      <button type="submit">Confirm</button>
+      <button type="submit" class="btn btn-danger">Confirm</button>
     </form>
   </div>
 </div>

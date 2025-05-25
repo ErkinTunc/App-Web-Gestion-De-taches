@@ -39,6 +39,54 @@ footer img {
   height: 100%;
 }
 
-footer li{
+footer li {
   list-style: none;
 }
+
+/* ======== Forms ========== */
+
+/* form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main form {
+  width: 30rem;
+  margin: 3rem auto;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+main form label {
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  font: inherit;
+  border: 1px solid rgb(184, 184, 184);
+  padding: 0.25rem;
+  color: rgb(184, 184, 184);
+}
+
+/* form input{
+  width: 8%;
+  display: inline;
+} */
+
+
+/* form input:focus,
+form textarea:focus,
+form select:focus {
+  background-color: rgb(219, 190, 253);
+  color: rgb(40, 15, 68);
+  border-color: rgb(40, 15, 68);
+} */ */
