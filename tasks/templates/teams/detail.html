@@ -4,42 +4,46 @@
     <h1 class="mb-4">Team: {{ team.name }}</h1>
 
     <!-- Member List | could be changed later if ı want to give more info on the users -->
-    <h3>Members:</h3>
-    {% if team.users.all %}
-    <div class="mb-4">
-      {% for user in team.users.all %}
-      <a
-        href="{% url 'task:detail_user' user.id %}"
-        class="btn btn-outline-primary me-2 mb-2"
-      >
-        {{ user.username }} (ID: {{ user.id }})
-      </a>
-      {% endfor %}
-    </div>
-    {% else %}
-    <p class="text-muted">No users in this team.</p>
-    {% endif %}
+    <section>
+      <h3>Members:</h3>
+      {% if team.users.all %}
+      <div class="mb-4">
+        {% for user in team.users.all %}
+        <a
+          href="{% url 'task:detail_user' user.id %}"
+          class="btn btn-outline-primary me-2 mb-2"
+        >
+          {{ user.username }} (ID: {{ user.id }})
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-muted">No users in this team.</p>
+      {% endif %}
+    </section>
 
     <!-- Task List -->
-    <h3>Tasks Assigned to This Team:</h3>
-    <ul class="list-group">
-      {% for task in team.tasks.all %}
-      <a
-        href="{% url 'task:detail_task' task.id %}"
-        class="btn btn-outline-primary me-2 mb-2"
-      >
-        {{ task.title }} (Status {{ task.status }} | ID: {{ task.id }})
-      </a>
+    <section>
+      <h3>Tasks Assigned to This Team:</h3>
+      <ul class="list-group">
+        {% for task in team.tasks.all %}
+        <a
+          href="{% url 'task:detail_task' task.id %}"
+          class="btn btn-outline-primary me-2 mb-2"
+        >
+          {{ task.title }} (Status {{ task.status }} | ID: {{ task.id }})
+        </a>
 
-      {% empty %}
-      <li class="list-group-item text-muted">
-        No tasks assigned to this team.
-      </li>
-      {% endfor %}
-    </ul>
+        {% empty %}
+        <li class="list-group-item text-muted">
+          No tasks assigned to this team.
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
 
     <!-- Buttons -->
-    <div class="mt-4">
+    <section class="mt-4">
       {% if user in team.users.all %}
 
       <!-- Leave Team button -->
@@ -67,16 +71,17 @@
 
       {% endif %}
 
-      <!-- Update , Delete Button -->
+      <!-- Update Button -->
       <a
         href="{% url 'task:update_team' team.id %}"
         class="btn btn-warning me-2"
         >Update</a
       >
+      <!-- Delete Button -->
       <a href="{% url 'task:delete_team' team.id %}" class="btn btn-danger"
         >Delete</a
       >
-    </div>
+    </section>
   </div>
 </main>
 {% endblock %}
