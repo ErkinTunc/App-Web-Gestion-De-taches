@@ -10,10 +10,14 @@ from .forms import CustomUserForm, TeamForm,TaskForm, UserUpdateForm, UserProfil
 # Create your views here.
 from django.http import HttpResponse
 
-# ================= ADMIN-INDEX =====================
+# ================= ADMIN-INDEX // CONTROL-PANEL =====================
 
 @login_required
 def admin_index(request):
+    
+    if not request.user.is_superuser: # Only admin can access this page
+        return HttpResponse("You are not authorized to acces this page.")
+    
     task_list = Task.objects.all() # rn they (task_list) are objects
     team_list = Team.objects.all()
     user_list = UserProfile.objects.all()
@@ -104,7 +108,7 @@ def detail_user(request, user_id):
 def create_user(request):
     form = CustomUserForm(request.POST or None)
 
-    if request.user.is_superuser: # Only admin can create a user
+    if not request.user.is_superuser: # Only admin can create a user
         return HttpResponse("Only superusers can create new users.")
 
     if form.is_valid():
