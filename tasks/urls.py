@@ -8,7 +8,7 @@ urlpatterns = [
     
     
     # Home Page for Admin
-    path("control-panel/", views.admin_index, name="admin_index"),
+    path("control-panel/", views.admin_index, name="control_panel"),
     
     # Home Page
     path("", views.index, name="index"), # we remoed it because we wont create other applications 

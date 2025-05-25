@@ -47,10 +47,17 @@ def index(request):
     current_user = request.user
     
     public_task_lists = []
-    users_task_list = current_user.tasks.all()
     
     users_team = current_user.teams.all()
+    users_task_set = set(current_user.tasks.all()) # set prevents duplication
+
+
+    for team in current_user.teams.all():
+        for task in team.tasks.all():
+            users_task_set.add(task)
+
     
+    # public list of tasks
     for task in task_list:
         if task.private == False :
             public_task_lists.append(task)
@@ -59,7 +66,7 @@ def index(request):
     context = {
         "current_user":current_user,
         "public_task_list":public_task_lists,
-        "users_task_list":users_task_list,
+        "users_task_list":list(users_task_set),  # convert set to list
         "users_team":users_team
     }
     return render(request,"index.html",context)
