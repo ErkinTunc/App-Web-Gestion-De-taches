@@ -137,9 +137,9 @@ python manage.py runserver
   "status": "todo" || "in_progress" || "done",
   "description": string,
 
-  "users": [User],
-  "teams": [Team],
-  "subtasks": [Task],
+  "users": [User],    // Le list de Users qui travailent sur cela
+  "teams": [Team],    // Le list de Teams 
+  "subtasks": [Task], // Le sub-tasks de cette Task
 
   "created_at": Date,
   "updated_at": Date, 

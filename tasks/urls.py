@@ -32,6 +32,7 @@ urlpatterns = [
     path("tasks/update/<int:id>/", views.update_task, name="update_task"),
     path("tasks/delete/<int:id>/", views.delete_task, name="delete_task"),
     path("tasks/<int:task_id>/add-sub-task", views.create_sub_task, name="create_sub_task"),
+    path("tasks/<int:task_id>/add-sub-team", views.create_sub_team, name="create_sub_team"),
 
     
     # Hellow World URL

@@ -69,8 +69,18 @@
       {% endif %}
     </div>
 
-    <!-- Update & Delete Buttons -->
+    <!-- Buttons -->
     <div class="mt-4">
+      <!-- Create sub-team -->
+      <form
+        action="{% url 'task:create_sub_team' task.id %}"
+        method="POST"
+        class="d-inline"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Create Task-Team</button>
+      </form>
+      <!-- Create Sub-Task -->
       <form
         action="{% url 'task:create_sub_task' task.id %}"
         method="POST"
@@ -79,11 +89,13 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Create Sub-Task</button>
       </form>
+      <!-- Update  -->
       <a
         href="{% url 'task:update_task' task.id %}"
         class="btn btn-warning me-2"
         >Update</a
       >
+      <!-- Delete -->
       <a href="{% url 'task:delete_task' task.id %}" class="btn btn-danger"
         >Delete</a
       >
