@@ -55,4 +55,4 @@ class TaskForm(forms.ModelForm):
         subtasks = forms.ModelMultipleChoiceField(queryset=Task.objects.all(),widget=forms.CheckboxSelectMultiple,required=False)
         class Meta: # a meta class which will hold the data
             model = Task
-            fields = ["title","status","description","users","teams","subtasks","deadline"]
+            fields = ["title","private","status","deadline","description","users","teams","subtasks",]
