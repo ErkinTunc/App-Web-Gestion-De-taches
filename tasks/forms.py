@@ -2,6 +2,7 @@ from django import forms
 from .models import UserProfile,Team,Task
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms.widgets import DateTimeInput
 
 # For creating users (it is not login)
 class CustomUserForm(UserCreationForm): # this will ask user 2 times its password and hash it
@@ -56,3 +57,5 @@ class TaskForm(forms.ModelForm):
         class Meta: # a meta class which will hold the data
             model = Task
             fields = ["title","private","status","deadline","description","users","teams","subtasks",]
+            widgets = {
+            'deadline': DateTimeInput(attrs={'type': 'datetime-local','class': 'form-control','placeholder': 'YYYY-MM-DD HH:MM'}),}
