@@ -1,48 +1,66 @@
 {% extends 'base.html' %} {% block body %}
 
-<section>
-  <h1>Public Tasks</h1>
-  <ul>
-    {% for task in public_task_list %}
+<div class="container">
+  <div class="row">
+    <section class="col-sm-4">
+      <h1>{{ current_user.username }}'s Tasks :</h1>
 
-    <li>
-      <a href="{% url 'task:detail_task' task.id %}">id: {{ task.id }} -- {{ task.title }} -- {{task.status}} </a>
-    </li>
+      <ul>
+        {% for task in users_task_list %}
 
-    {% empty %}
-    <p>There are no tasks avaible.</p>
-    {% endfor %}
-  </ul>
-</section>
+        <li>
+          <a href="{% url 'task:detail_task' task.id %}"
+            >id: {{ task.id }} -- {{ task.title }} -- {{task.status}}</a
+          >
+        </li>
 
-<section>
-  <h1>{{ current_user.username }}'s Tasks :</h1>
-  <ul>
-    {% for task in users_task_list %}
+        {% empty %}
+        <p>You {{ current_user.username }} have no tasks</p>
+        {% endfor %}
+      </ul>
+    </section>
+  
 
-    <li>
-      <a href="{% url 'task:detail_task' task.id %}">id: {{ task.id }} -- {{ task.title }} -- {{task.status}}</a>
-    </li>
+  
+    <section class="col-sm-4">
+      <h1>{{ current_user.username }}'s Teams :</h1>
+      <ul>
+        {% for team in users_team %}
 
-    {% empty %}
-    <p>You {{ current_user.username }} have no tasks</p>
-    {% endfor %}
-  </ul>
-</section>
+        <li>
+          <a href="{% url 'task:detail_team' team.id %}"
+            >id: {{ team.id }} -- {{ team.name }}</a
+          >
+        </li>
 
-<section>
-  <h1>{{ current_user.username }}'s Teams :</h1>
-  <ul>
-    {% for team in users_team %}
+        {% empty %}
+        <p>You {{ current_user.username }} are not part of any teams</p>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+  
+  
+  <div class="row">
+    <section class="col-sm-4">
+      <h1>Public Tasks</h1>
+      <ul>
+        {% for task in public_task_list %}
 
-    <li>
-      <a href="{% url 'task:detail_team' team.id %}">id: {{ team.id }} -- {{ team.name }}</a>
-    </li>
+        <li>
+          <a href="{% url 'task:detail_task' task.id %}"
+            >id: {{ task.id }} -- {{ task.title }} -- {{task.status}}
+          </a>
+        </li>
 
-    {% empty %}
-    <p>You {{ current_user.username }} are not part of any teams</p>
-    {% endfor %}
-  </ul>
-</section>
+        {% empty %}
+        <p>There are no tasks avaible.</p>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+
+  
+</div>
 
 {% endblock %}
