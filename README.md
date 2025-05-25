@@ -51,25 +51,27 @@ python manage.py runserver
 
 ## Fonctionnalités
 
-- **Authentification** : chaque utilisateur doit se connecter ou s’inscrire pour accéder au site.
+- **Authentification** : chaque utilisateur doit se connecter ou s’inscrire pour accéder au site. S'ils essaient, ils seront redirigés vers la page de connexion.
 
 ### Fonctionnalités des Tâches
 
 - Une tâche comporte un titre, un statut, une description, une liste de sous-tâches, une liste de personnes et une liste d'équipes associées.
 - Une tâche peut être privée (visible uniquement par les personnes/équipes associées) ou publique.
-- L'utilisateur peut créer, modifier et supprimer une tâche.
+- L'utilisateur peut créer (seules les personnes travaillant sur cette tâche et le créateur peuvent), modifier et (seul le créateur d'une tâche peut) supprimer une tâche.
 - Lorsqu'une tâche est supprimée, tous ses liens avec les équipes et les personnes sont automatiquement supprimés.
 
 ### Fonctionnalités des Équipes
 
 - Une équipe a un nom et une liste de personnes.
-- Un utilisateur peut créer, modifier, quitter et supprimer une équipe.
+- Un utilisateur peut créer, entrer, quitter (s'il est dans l'équipe), modifier et supprimer une équipe.
 - Lorsqu'une équipe est supprimée, tous ses liens avec les tâches et les personnes sont automatiquement supprimés.
 
 ### Fonctionnalités des Utilisateurs
 
 - Un utilisateur a un nom, un e-mail, une description, un mot de passe et une image.
 - Un utilisateur peut consulter le profil d’un autre utilisateur/équipe, ainsi que les tâches publiques qui lui sont attribuées.
+- Un utilisateur peut modifier et supprimer son profil (ainsi que le super utilisateur).
+- Un super user peut créer un utilisateur
 - Lorsqu’un utilisateur est supprimé, toutes ses relations avec les tâches et les équipes sont automatiquement supprimées.
 
 ---
@@ -94,7 +96,8 @@ python manage.py runserver
 ## Routes API
 
 ### Page d’accueil
-- `GET /` – Affiche toutes les tâches
+- `GET /` – Affiche toutes les tâches public et les tache d'utilisateur
+- `GET /control-panel/` - C'est le panel de control pour le superuser. Cela affiche tous le taches,equipes et utilisateur.
 
 ### Authentification
 - `POST /register` – Créer un compte
@@ -120,15 +123,15 @@ python manage.py runserver
 - `POST /tasks/add` – Créer une tâche
 - `POST /tasks/update/:id` – Mettre à jour une tâche
 - `POST /tasks/delete/:id` – Supprimer une tâche
-- `POST /tasks/:id/assign/team/:teamId` – Assigner une équipe
-- `POST /tasks/:id/unassign/team/:teamId` – Retirer une équipe
+- `POST tasks/:id/add-sub-task` – Assigner une sous-tache
+- `POST tasks/:id/add-sub-team` – Assigner une équipe
 
 ---
 
 ## Modèles (Entities)
 
 ### Task
-```json
+```bash
 {
   "private": boolean,
   "creator": User,
@@ -148,7 +151,7 @@ python manage.py runserver
 ```
 
 ### Team
-```json
+```bash
 {
   "name": string,
   "users": [User]
@@ -157,7 +160,7 @@ python manage.py runserver
 
 ### User
 Classe utilisateur par défaut :
-```json
+```bash
 {
   "id": int,
   "name": string,
